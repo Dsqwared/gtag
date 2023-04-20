@@ -8,7 +8,7 @@ Vue.use(VueGtag, {
 });
 
 const analyticsService = {
-  // Отправка события выбора полиса
+  // Событие выбора полиса
   sendPolicySelected(policyData) {
     Vue.$gtag.event("select_item", {
       items: [
@@ -22,56 +22,56 @@ const analyticsService = {
     });
   },
 
-  // Отправка события ввода контактной информации
+  // Событие ввода контактной информации
   sendContactInfoEntered(contactData) {
     Vue.$gtag.event("contact_info_entered", {
       event_category: "engagement",
-      contact_data: contactData, // передавайте необходимые данные контакта здесь
+      contact_data: contactData,
     });
   },
 
-  // Отправка события ввода данных об автомобиле
+  // Событие ввода данных автомобиля
   sendCarDataEntered(carData) {
     Vue.$gtag.event("car_data_entered", {
       event_category: "engagement",
-      car_data: carData, // передавайте необходимые данные автомобиля здесь
+      car_data: carData,
     });
   },
 
-  // Отправка события ввода данных документов
+  // Событие ввода данных документов
   sendDocumentsEntered(documentData) {
     Vue.$gtag.event("documents_entered", {
       event_category: "engagement",
-      document_data: documentData, // передавайте необходимые данные документа здесь
+      document_data: documentData,
     });
   },
 
-  // Отправка события выбора ДГО
+  // Событие выбора DGO
   sendDgoSelected(dgoData) {
     Vue.$gtag.event("dgo_selected", {
       event_category: "engagement",
-      dgo_data: dgoData, // передавайте необходимые данные DGO здесь
+      dgo_data: dgoData,
     });
   },
 
-  // Отправка события создания контракта
+  // Событие создания контракта
   sendContractCreated(contractData) {
     Vue.$gtag.event("contract_created", {
       event_category: "engagement",
-      contract_data: contractData, // передавайте необходимые данные контракта здесь
+      contract_data: contractData,
     });
   },
 
-  // Отправка события успешной оплаты
-  sendPurchase(amount, currency) {
+  // Событие успешной оплаты (покупки)
+  sendPurchase(amount, currency, transactionId, itemId, itemName) {
     Vue.$gtag.event("purchase", {
-      transaction_id: "123456", // замените на динамический идентификатор транзакции
+      transaction_id: transactionId, // динамический идентификатор транзакции
       value: amount, // сумма покупки
       currency: currency, // валюта покупки
       items: [
         {
-          item_id: "123", // замените на динамический идентификатор товара
-          item_name: "Some insurance policy", // замените на динамическое имя товара
+          item_id: itemId, // динамический идентификатор товара
+          item_name: itemName, // динамическое имя товара
           price: amount, // цена товара
           currency: currency, // валюта товара
           quantity: 1, // количество товара
@@ -79,7 +79,6 @@ const analyticsService = {
       ],
     });
   },
-
 };
 
 export default analyticsService;
