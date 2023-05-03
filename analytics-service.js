@@ -69,14 +69,6 @@ const analyticsService = {
     Vue.$gtag.event("osago_select");
   },
 
-  // Событие ввода данных автомобиля
-  sendCarDataEntered(carData) {
-    Vue.$gtag.event("car_data_entered", {
-      event_category: "engagement",
-      car_data: carData,
-    });
-  },
-
   // Событие выбора DGO
   sendOsagoOrderAdditionalCoverSelected(dgoData) {
     Vue.$gtag.event("osago_order_additional_cover_selected", {
