@@ -103,7 +103,7 @@ const analyticsService = {
 
   // Применение ПромоКода
   sendOsagoSetPromo(data) {
-    Vue.$gtag.event("osago_order_checkout", data);
+    Vue.$gtag.event("osago_set_promo", data);
   },
 
     // Событие PopUp (“Зачекайте! Ви забули знижку!”) открылся
