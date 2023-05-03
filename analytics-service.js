@@ -7,122 +7,117 @@ Vue.use(VueGtag, {
   config: { id: GA_MEASUREMENT_ID },
 });
 
-const selectedPolicyData = {
-  transactionId: null,
-  itemId: null,
-  itemName: null,
-  price: null,
-  currency: null,
-  itemVariant: null,
-  dgoPrice: 0,
-  discount: 0,
-};
-
 const analyticsService = {
-	
-  // Событие просмотр главной страницы
-  sendHomePageView(homepageData) {
-    Vue.$gtag.event("home_page_view", {
-      contact_data: homepageData,
+  // Событие выбора полиса
+    sendOsagoPolicySelected(policyData) {
+    Vue.$gtag.event("osago_order_selected", {
+      items: [
+        {
+          item_id: policyData.id, // идентификатор полиса
+          item_franchise: policyData.franchise, // тип франшиза
+          company: policyData.company, // Компания назв.
+        },
+      ],
     });
   },
-
-  // Событие просмотр целевой страницы ОСАГО
-  sendOsagoPageView(osagopageData) {
-    Vue.$gtag.event("osago_page_view", {
-      contact_data: osagopageData,
-    });
-  },
-  
-  // Не выбрал никакого предложения и ушёл
-  sendOsagoSelect(osagoselectData) {
-    Vue.$gtag.event("osago_select", {
-      contact_data: osagoselectData,
-    });
-  },
-
-	// Событие выбора полиса
-	sendOsagoOrderSelected(orderData) {
-		selectedPolicyData.transactionId = orderData.transactionId;
-		selectedPolicyData.itemId = orderData.id;
-		selectedPolicyData.itemName = orderData.type;
-		selectedPolicyData.price = orderData.amount;
-		selectedPolicyData.currency = orderData.currency;
-		selectedPolicyData.itemVariant = orderData.variant;
-	
-		Vue.$gtag.event("osago_order_selected", {
-			items: [
-			{
-				item_id: orderData.id,
-				item_name: orderData.type,
-				price: orderData.amount,
-				currency: orderData.currency,
-				item_variant: orderData.variant,
-			},
-			],
-		});
-	},
-
 
   // Событие ввода контактной информации
   sendContactInfoEntered(contactData) {
-    Vue.$gtag.event("osago_order_personal_entered", {
+    Vue.$gtag.event("contact_info_entered", {
+      event_category: "engagement",
       contact_data: contactData,
     });
   },
 
-  // Событие ввода данных автомобиля
-  sendOsagoOrderCarEntered(carData) {
+  // Событие ввода контактных данных
+  sendOsagoOrderPersonalEntered(data) {
+    Vue.$gtag.event("osago_order_personal_entered",{
+        event_category: "engagement",
+        personal_data:data
+    });
+  },
+
+  // Событие ввода данных авто
+  sendOsagoOrderCarEntered(data) {
     Vue.$gtag.event("osago_order_car_entered", {
+      event_category: "engagement",
+      car_data: data,
+    });
+  },
+
+
+    // Событие ввода данных документов
+  sendOsagoOrderDocumentEntered(documentData) {
+    Vue.$gtag.event("osago_order_document_entered", {
+        event_category: "engagement",
+        document_data: documentData,
+    });
+  },
+
+  // Событие открытия главной страницы
+  sendHomePageView() {
+    Vue.$gtag.event("home_page_view");
+  },
+
+  // Событие выбора Осаго на главной странице
+  sendOsagoPageView() {
+    Vue.$gtag.event("osago_page_view");
+  },
+
+  // Событие - Ввел данные в калькуляторе, нажал кнопку “показати результати”
+  sendOsagoSelect() {
+    Vue.$gtag.event("osago_select");
+  },
+
+  // Событие ввода данных автомобиля
+  sendCarDataEntered(carData) {
+    Vue.$gtag.event("car_data_entered", {
+      event_category: "engagement",
       car_data: carData,
     });
   },
 
-  // Событие ввода данных документов
-  sendOsagoOrderDocumentsEntered(documentData) {
-    Vue.$gtag.event("osago_order_document_entered", {
-      document_data: documentData,
+  // Событие выбора DGO
+  sendOsagoOrderAdditionalCoverSelected(dgoData) {
+    Vue.$gtag.event("osago_order_additional_cover_selected", {
+      event_category: "engagement",
+      dgo_data: dgoData,
     });
   },
 
-  // Событие выбора DGO (его можно выбрать и на всём пути + добавляется в корзину (формально)
-	sendOsagoorderAdditionalCoverSelected(dgoData) {
-		selectedPolicyData.dgoPrice = dgoData.price;
-
-		Vue.$gtag.event("osago_order_additional_cover_selected", {
-			dgo_data: dgoData,
-		});
-	},
-
-
-  // Событие создания контракта - договор и оплата + данные промокода
-  sendOsagoOrderCheckout(contractData, promoCodeData) {
-    selectedPolicyData.discount = promoCodeData.discount;
-	
+  // Событие - загрузилась страница договор
+  sendOsagoOrderCheckout(order_id) {
     Vue.$gtag.event("osago_order_checkout", {
-      contract_data: contractData,
-      promo_code_data: promoCodeData,
+      event_category: "engagement",
+      order_id: order_id,
     });
   },
 
-	sendOsagoPurchase(amount, currency, transactionId) {
-		const finalPrice = (selectedPolicyData.price + selectedPolicyData.dgoPrice) * (1 - selectedPolicyData.discount);
+  // Событие успешной оплаты (покупки)
+  sendOsagoPurchase(params) {
+    Vue.$gtag.event("osago_purchase", {
+        event_category: "engagement",
+        purchase_data:params
+    });
+  },
 
-		Vue.$gtag.event("osago_purchase", {
-			transaction_id: transactionId,
-			value: finalPrice,
-			currency: currency,
-			items: [
-			{
-				item_id: selectedPolicyData.itemId,
-				item_name: selectedPolicyData.itemName,
-				price: finalPrice,
-				currency: selectedPolicyData.currency,
-				quantity: 1,
-			},
-			],
-	});
-	},
-}; 
+  // Применение ПромоКода
+  sendOsagoSetPromo(data) {
+    Vue.$gtag.event("osago_order_checkout", data);
+  },
+
+    // Событие PopUp (“Зачекайте! Ви забули знижку!”) открылся
+    sendOpenedPopUp() {
+        Vue.$gtag.event("popup_buy_later_view");
+    },
+    // Событие PopUp (“Зачекайте! Ви забули знижку!”) закрылся
+    sendClosedPopUp() {
+        Vue.$gtag.event("popup_buy_later_closed");
+    },
+    // Событие PopUp (“Зачекайте! Ви забули знижку!”) Контакты отправлены
+    sendSendPopUpData(data) {
+        Vue.$gtag.event("popup_buy_later_entered",data);
+    },
+};
 
 export default analyticsService;
