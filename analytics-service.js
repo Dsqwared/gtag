@@ -11,13 +11,9 @@ const analyticsService = {
   // Событие выбора полиса
     sendOsagoPolicySelected(policyData) {
     Vue.$gtag.event("osago_order_selected", {
-      items: [
-        {
-          item_id: policyData.id, // идентификатор полиса
-          item_franchise: policyData.franchise, // тип франшиза
-          company: policyData.company, // Компания назв.
-        },
-      ],
+        item_id: policyData.id, // идентификатор полиса
+        item_franchise: policyData.franchise, // тип франшиза
+        company: policyData.company, // Компания назв.
     });
   },
 
