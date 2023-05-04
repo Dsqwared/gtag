@@ -29,7 +29,7 @@ const analyticsService = {
   sendOsagoOrderPersonalEntered(data) {
     Vue.$gtag.event("osago_order_personal_entered",{
         event_category: "engagement",
-        personal_data:data
+        data
     });
   },
 
@@ -37,7 +37,7 @@ const analyticsService = {
   sendOsagoOrderCarEntered(data) {
     Vue.$gtag.event("osago_order_car_entered", {
       event_category: "engagement",
-      car_data: data,
+      data,
     });
   },
 
@@ -46,7 +46,7 @@ const analyticsService = {
   sendOsagoOrderDocumentEntered(documentData) {
     Vue.$gtag.event("osago_order_document_entered", {
         event_category: "engagement",
-        document_data: documentData,
+        documentData,
     });
   },
 
@@ -85,7 +85,7 @@ const analyticsService = {
   sendOsagoPurchase(params) {
     Vue.$gtag.event("osago_purchase", {
         event_category: "engagement",
-        purchase_data:params
+        params,
     });
   },
 
