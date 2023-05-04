@@ -1,6 +1,5 @@
 <script>
 import analyticsService from '@/services/analytics-service';
-
 export default {
   data: function () {
     return {
@@ -9,60 +8,59 @@ export default {
   },
   methods: {
     onClose() {
-            analyticsService.sendClosedPopUp();
-        },
-    onShow() {
-        analyticsService.sendOpenedPopUp();
+      analyticsService.sendClosedPopUp();
     },
-    onSendPopupdata(){
-        let data = {
-              phone: this.phone,
-              name: this.name,
-              end_insurance: this.dateEnd,
-              type_id: this.insuranceType
-        };
-        analyticsService.sendSendPopUpData(data);
+    onShow() {
+      analyticsService.sendOpenedPopUp();
+    },
+    onSendPopupdata() {
+      let data = {
+        phone: this.phone,
+        name: this.name,
+        end_insurance: this.dateEnd,
+        type_id: this.insuranceType,
+      };
+      analyticsService.sendSendPopUpData(data);
     },
     onSendHomePageView() {
-            analyticsService.sendHomePageView();
+      analyticsService.sendHomePageView();
     },
     onSendOsagoOrderCarEntered() {
-    let params = {
-                    plate: plate,
-                    year: this.year,
-                    vin: this.vin,
-                    model: this.model,
-                    mark: this.mark,
-                };
-          analyticsService.sendOsagoOrderCarEntered(params);
+      let params = {
+        plate: plate,
+        year: this.year,
+        vin: this.vin,
+        model: this.model,
+        mark: this.mark,
+      };
+      analyticsService.sendOsagoOrderCarEntered(params);
     },
     onSendOsagoOrderCheckout() {
       analyticsService.sendOsagoOrderCheckout(this.orderId);
     },
-    onSendOsagoOrderCheckout() {
-     let params = {order_id: this.orderId, promoCode:this.selectedPromo};
-     analyticsService.sendOsagoSetPromo(params);
+    onSendOsagoSetPromo() {
+      let params = { order_id: this.orderId, promoCode: this.selectedPromo };
+      analyticsService.sendOsagoSetPromo(params);
     },
-    onSendOsagoOrderCheckout() {
-     analyticsService.sendOsagoOrderAdditionalCoverSelected(this.dataDgo);
+    onSendOsagoOrderAdditionalCoverSelected() {
+      analyticsService.sendOsagoOrderAdditionalCoverSelected(this.dataDgo);
     },
     onSendOsagoOrderDocumentEntered() {
-      analyticsService.sendOsagoOrderDocumentEntered(params);     
+      analyticsService.sendOsagoOrderDocumentEntered(params);
     },
     onSendOsagoPurchase() {
-      analyticsService.sendOsagoPurchase(params); 
+      analyticsService.sendOsagoPurchase(params);
     },
     onSendOsagoOrderPersonalEntered() {
       analyticsService.sendOsagoOrderPersonalEntered(params);
     },
-    onSendEventOsagoSelect(){
+    onSendEventOsagoSelect() {
       analyticsService.sendOsagoSelect();
     },
-    onSendOsagoPolicySelected(){
-      const policyData = { id: item.id, franchise:item.franchise, company:item.company.name};
+    onSendOsagoPolicySelected() {
+      const policyData = { id: item.id, franchise: item.franchise, company: item.company.name };
       analyticsService.sendOsagoPolicySelected(policyData);
     },
-     
   },
 };
 </script>
