@@ -17,13 +17,6 @@ const analyticsService = {
     });
   },
 
-  // Событие ввода контактной информации
-  sendContactInfoEntered(contactData) {
-    Vue.$gtag.event("contact_info_entered", {
-      event_category: "engagement",
-      contact_data: contactData,
-    });
-  },
 
   // Событие ввода контактных данных
   sendOsagoOrderPersonalEntered(data) {
