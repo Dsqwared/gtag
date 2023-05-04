@@ -8,50 +8,61 @@ export default {
     };
   },
   methods: {
-    onPolicySelected() {
-      const policyData = {
-        amount: this.policyAmount,
-        currency: this.policyCurrency,
-        id: this.policyId,
-        type: this.policyType
-      };
-      analyticsService.sendPolicySelected(policyData);
+    onClose() {
+            analyticsService.sendClosedPopUp();
+        },
+    onShow() {
+        analyticsService.sendOpenedPopUp();
     },
-
-    onContactInfoEntered() {
-      const contactData = this.contactData;
-      analyticsService.sendContactInfoEntered(contactData);
+    onSendPopupdata(){
+        let data = {
+              phone: this.phone,
+              name: this.name,
+              end_insurance: this.dateEnd,
+              type_id: this.insuranceType
+        };
+        analyticsService.sendSendPopUpData(data);
     },
-
-    onCarDataEntered() {
-      const carData = this.carData;
-      analyticsService.sendCarDataEntered(carData);
+    onSendHomePageView() {
+            analyticsService.sendHomePageView();
     },
-
-    onDocumentsEntered() {
-      const documentData = this.documentData;
-      analyticsService.sendDocumentsEntered(documentData);
+    onSendOsagoOrderCarEntered() {
+    let params = {
+                    plate: plate,
+                    year: this.year,
+                    vin: this.vin,
+                    model: this.model,
+                    mark: this.mark,
+                };
+          analyticsService.sendOsagoOrderCarEntered(params);
     },
-
-    onDgoSelected() {
-      const dgoData = this.dgoData;
-      analyticsService.sendDgoSelected(dgoData);
+    onSendOsagoOrderCheckout() {
+      analyticsService.sendOsagoOrderCheckout(this.orderId);
     },
-
-    onContractCreated() {
-      const contractData = this.contractData;
-      analyticsService.sendContractCreated(contractData);
+    onSendOsagoOrderCheckout() {
+     let params = {order_id: this.orderId, promoCode:this.selectedPromo};
+     analyticsService.sendOsagoSetPromo(params);
     },
-
-    onPurchase() {
-      const amount = this.purchaseAmount;
-      const currency = this.purchaseCurrency;
-      const transactionId = this.transactionId; // динамический идентификатор транзакции
-      const itemId = this.itemId; // динамический идентификатор товара
-      const itemName = this.itemName; // динамическое имя товара
-
-      analyticsService.sendPurchase(amount, currency, transactionId, itemId, itemName);
+    onSendOsagoOrderCheckout() {
+     analyticsService.sendOsagoOrderAdditionalCoverSelected(this.dataDgo);
     },
+    onSendOsagoOrderDocumentEntered() {
+      analyticsService.sendOsagoOrderDocumentEntered(params);     
+    },
+    onSendOsagoPurchase() {
+      analyticsService.sendOsagoPurchase(params); 
+    },
+    onSendOsagoOrderPersonalEntered() {
+      analyticsService.sendOsagoOrderPersonalEntered(params);
+    },
+    onSendEventOsagoSelect(){
+      analyticsService.sendOsagoSelect();
+    },
+    onSendOsagoPolicySelected(){
+      const policyData = { id: item.id, franchise:item.franchise, company:item.company.name};
+      analyticsService.sendOsagoPolicySelected(policyData);
+    },
+     
   },
 };
 </script>
