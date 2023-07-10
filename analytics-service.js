@@ -8,39 +8,39 @@ Vue.use(VueGtag, {
 });
 
 const analyticsService = {
-  // Событие выбора полиса
-    sendOsagoPolicySelected(policyData) {
-    Vue.$gtag.event("osago_order_selected", {
-        item_id: policyData.id, // идентификатор полиса
-        item_franchise: policyData.franchise, // тип франшиза
-        company: policyData.company, // Компания назв.
-    });
-  },
 
+  // Событие выбора полиса
+  sendOsagoPolicySelected(policyData) {
+    Vue.$gtag.event("osago_order_selected", policyData);
+  },
+  // Событие выбора полиса для eCom
+  sendOsagoPolicyAddToCart(policyData) {
+    Vue.$gtag.event("add_to_cart", policyData);
+  },
+  // Событие - просмотра товара для eCom
+  sendOsagoViewItem(policyData) {
+    Vue.$gtag.event("view_item",policyData);
+  },
 
   // Событие ввода контактных данных
   sendOsagoOrderPersonalEntered(data) {
-    Vue.$gtag.event("osago_order_personal_entered",{
-        event_category: "engagement",
+    Vue.$gtag.event("osago_order_personal_entered",
         data
-    });
+    );
   },
 
   // Событие ввода данных авто
   sendOsagoOrderCarEntered(data) {
-    Vue.$gtag.event("osago_order_car_entered", {
-      event_category: "engagement",
-      data,
-    });
+    Vue.$gtag.event("osago_order_car_entered",
+        data
+    );
   },
-
 
     // Событие ввода данных документов
   sendOsagoOrderDocumentEntered(documentData) {
-    Vue.$gtag.event("osago_order_document_entered", {
-        event_category: "engagement",
-        documentData,
-    });
+    Vue.$gtag.event("osago_order_document_entered",
+        documentData
+    );
   },
 
   // Событие открытия главной страницы
@@ -58,29 +58,29 @@ const analyticsService = {
     Vue.$gtag.event("osago_select");
   },
 
+
   // Событие выбора DGO
-  sendOsagoOrderAdditionalCoverSelected(dgoData) {
-    Vue.$gtag.event("osago_order_additional_cover_selected", {
-      event_category: "engagement",
-      dgo_data: dgoData,
-    });
+  sendOsagoOrderAdditionalCoverSelected(params) {
+    Vue.$gtag.event("osago_order_additional_cover_selected", params);
   },
 
   // Событие - загрузилась страница договор
-  sendOsagoOrderCheckout(order_id) {
-    Vue.$gtag.event("osago_order_checkout", {
-      event_category: "engagement",
-      order_id: order_id,
-    });
+  sendOsagoOrderCheckout(params) {
+    Vue.$gtag.event("osago_order_checkout", params);
+  },
+
+  // Событие - загрузилась страница договор для eCom
+  sendOsagoBeginCheckout(params) {
+    Vue.$gtag.event("begin_checkout", params);
   },
 
   // Событие успешной оплаты (покупки)
   sendOsagoPurchase(params) {
-    Vue.$gtag.event("osago_purchase", {
-        event_category: "engagement",
-        params,
-    });
+    Vue.$gtag.event("purchase",
+        params
+    );
   },
+
 
   // Применение ПромоКода
   sendOsagoSetPromo(data) {
